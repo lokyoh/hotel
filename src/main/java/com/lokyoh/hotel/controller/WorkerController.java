@@ -1,6 +1,8 @@
 package com.lokyoh.hotel.controller;
 
 import com.lokyoh.hotel.entity.*;
+import com.lokyoh.hotel.service.RoomService;
+import com.lokyoh.hotel.service.UserService;
 import com.lokyoh.hotel.service.WorkerService;
 import com.lokyoh.hotel.utils.JwtUtil;
 import com.lokyoh.hotel.utils.ThreadLocalUtil;
@@ -21,6 +23,10 @@ public class WorkerController {
 
     @Autowired
     private WorkerService workerService;
+    @Autowired
+    private RoomService roomService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login")
     public Result<String> login(@Pattern(regexp = "\\S{5,16}$") String account, @Pattern(regexp = "\\S{5,16}$") String password) {
@@ -59,11 +65,11 @@ public class WorkerController {
         Rooms rooms = new Rooms();
 
         // 获取房间
-        List<Room> roomList = workerService.getRooms();
+        List<Room> roomList = roomService.getRooms();
         rooms.setCount(roomList.size());
 
         // 获取入住,预定表
-        List<Occupancies> occupanciesList = workerService.getNowOccupy();
+        List<Occupancies> occupanciesList = roomService.getNowOccupy();
         Map<String, Occupancies> checkInRooms = new HashMap<>();
         Map<String, Occupancies> reserveRooms = new HashMap<>();
         occupanciesList.forEach(occupancy -> {
@@ -89,10 +95,10 @@ public class WorkerController {
                     String customer = null;
                     if (checkInRooms.containsKey(roomId)) {
                         status = 1;
-                        customer = workerService.getCustomerNameById(checkInRooms.get(roomId).getCustomerId());
+                        customer = userService.getCustomerNameById(checkInRooms.get(roomId).getCustomerId());
                     }else if(reserveRooms.containsKey(roomId)) {
                         status = 2;
-                        customer = workerService.getCustomerNameById(reserveRooms.get(roomId).getCustomerId());
+                        customer = userService.getCustomerNameById(reserveRooms.get(roomId).getCustomerId());
                     }
                     return new RoomInfo(roomId, room.getRoomId(), status, customer);
                 }).toList();
@@ -102,12 +108,16 @@ public class WorkerController {
     }
 
     @PostMapping("/newReservation")
-    public Result<String> newReservation(String cname, String roomId) {
-        return Result.success();
+    public Result<String> newReservation(@RequestBody Reservations reservations) {
+        if (roomService.checkRoom(reservations.getRoomId())) {
+            roomService.newReservation(reservations);
+            return Result.success();
+        }
+        return Result.error("房间已被占用");
     }
 
     @PostMapping("/newCheckin")
-    public Result<String> newCheckin(String cname, String roomId) {
-        return Result.success();
+    public Result<String> newCheckin(Checkins checkins) {
+        return Result.error("房间已被占用");
     }
 }

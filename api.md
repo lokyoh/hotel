@@ -117,7 +117,7 @@
 
 | 参数       | 类型     | 必须   | 说明       |
 |:---------|:-------|:-----|:---------|
-| account  | string | true | 手机号      |
+| account  | string | true | 员工账号     |
 | password | string | true | 密码，6-16位 |
 
 ##### 响应类型:
@@ -199,7 +199,7 @@
 }
 ```
 
-### 2.3 获取所有房间基础信息x
+### 2.3 获取所有房间基础信息
 
 ##### 接口功能:
 
@@ -252,5 +252,100 @@
             }
         ]
     }
+}
+```
+
+### 2.4 添加预定
+
+##### 接口功能:
+
+> 用于员工添加预定
+
+##### 请求路径:
+
+> /api/worker/newReservation
+
+##### 请求方式:
+
+> POST
+
+##### 请求参数:
+
+| 参数               | 类型     | 必须   | 说明     |
+|:-----------------|:-------|:-----|:-------|
+| customerId       | number | true | 客户名    |
+| roomId           | string | true | 房间名    |
+| numberOfGuests   | number | true | 客户数量   |
+| expectedCheckin  | date   | true | 预期入住时间 |
+| expectedCheckout | date   | true | 预期离开时间 |
+
+##### 响应类型:
+
+> JSON
+
+##### 响应数据:
+
+| 参数      | 类型     | 必须    | 说明          |
+|:--------|:-------|:------|:------------|
+| code    | number | true  | 响应码,0成功,1失败 |
+| message | string | false | 提示信息        |
+| data    | null   | false | null        |
+
+##### 接口示例:
+
+返回:
+
+```
+{
+    "code": 1,
+    "message": "操作成功",
+    "data": null
+}
+```
+
+### 2.5 添加入住
+
+##### 接口功能:
+
+> 用于员工添加入住
+
+##### 请求路径:
+
+> /api/worker/newCheckin
+
+##### 请求方式:
+
+> POST
+
+##### 请求体:
+
+| 参数            | 类型     | 必须   | 说明     |
+|:--------------|:-------|:-----|:-------|
+| customerId    | string | true | 客户名    |
+| roomId        | string | true | 房间名    |
+| checkinTime   | date   | true | 预期入住时间 |
+| departureTime | date   | true | 预期离开时间 |
+
+##### 响应类型:
+
+> JSON
+
+##### 响应数据:
+
+| 参数      | 类型     | 必须    | 说明          |
+|:--------|:-------|:------|:------------|
+| code    | number | true  | 响应码,0成功,1失败 |
+| message | string | false | 提示信息        |
+| data    | null   | false | null        |
+
+##### 接口示例:
+
+返回:
+
+```
+{
+    "code": 1,
+    "message": "操作成功",
+    "data": null
 }
 ```
