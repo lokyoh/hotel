@@ -89,17 +89,27 @@ CREATE TABLE customers
     FOREIGN KEY (membership) REFERENCES members (membership)
 );
 INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
-VALUES ('330324200407010001', '王佳妮', '女', '甘肃省兰州市AA街道', '19817132000', '二级会员', 2200),
-       ('330311200410010010', '黄振奇', '男', '江苏省扬州市AA街道', '18817132011', '二级会员', 1100),
-       ('330111197806220999', '李志玲', '女', '四川省成都市AA街道', '18806872000', '普通', 200),
-       ('320326197607110201', '陈诗诗', '女', '陕西省太原市AA街道', '19806874020', '一级会员', 3320),
-       ('215687200102010079', '叶雨莎', '女', '浙江省温州市AA街道', '18893062000', '二级会员', 1200),
-       ('221235200207090103', '王爱莎', '女', '浙江省台州市AA街道', '13945682620', '二级会员', 1800),
-       ('330324199410120020', '孙慕钦', '男', '云南省丽江市AA街道', '19819452000', '一级会员', 4500),
-       ('330324198406050521', '黄佳妮', '女', '云南省西双版纳AA街道', '19893130180', '普通', 500),
-       ('210015197708010000', '张起灵', '男', '福建省厦门市AA街道', '16945687912', '二级会员', 1200),
-       ('230064197807010210', '无邪', '男', '安徽省黄山市AA街道', '19826257132', '普通', 350),
-       ('330046196504110035', '薛芳芳', '女', '甘肃省天水市AA街道', '17171071523', '二级会员', 1200);
+VALUES ('330324200407010001', '王佳妮', '女', '甘肃省兰州市AA街道', '19817132000', '二级会员', 2200)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('330311200410010010', '黄振奇', '男', '江苏省扬州市AA街道', '18817132011', '二级会员', 1100)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('330111197806220999', '李志玲', '女', '四川省成都市AA街道', '18806872000', '普通', 200)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('320326197607110201', '陈诗诗', '女', '陕西省太原市AA街道', '19806874020', '一级会员', 3320)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('215687200102010079', '叶雨莎', '女', '浙江省温州市AA街道', '18893062000', '二级会员', 1200)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('221235200207090103', '王爱莎', '女', '浙江省台州市AA街道', '13945682620', '二级会员', 1800)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('330324199410120020', '孙慕钦', '男', '云南省丽江市AA街道', '19819452000', '一级会员', 4500)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('330324198406050521', '黄佳妮', '女', '云南省西双版纳AA街道', '19893130180', '普通', 500)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('210015197708010000', '张起灵', '男', '福建省厦门市AA街道', '16945687912', '二级会员', 1200)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('230064197807010210', '无邪', '男', '安徽省黄山市AA街道', '19826257132', '普通', 350)
+;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+ VALUES ('330046196504110035', '薛芳芳', '女', '甘肃省天水市AA街道', '17171071523', '二级会员', 1200);
 
 -- 员工表
 DROP TABLE IF EXISTS employees;
@@ -143,16 +153,16 @@ CREATE TABLE reservations
     Foreign Key (rtype) references roomtype (rtype)
 );
 INSERT INTO reservations (customer_id, rtype, room_id, number_of_guests, expected_checkin, expected_checkout, rstatus)
-VALUES (1, '大床房', '0101', 1, '2024-06-05', '2024-06-06', '已完成'),
-       (2, '双人间', '0107', 2, '2024-06-09', '2024-06-10', '未完成'),
-       (3, '大床房', '0102', 1, '2024-06-05', '2004-06-06', '已完成'),
-       (4, '豪华大床房', '0105', 1, '2024-06-09', '2024-06-10', '未完成'),
-       (5, '大床房', '0103', 1, '2024-06-06', '2024-06-07', '已完成'),
-       (5, '豪华大床房', '0106', 1, '2024-06-11', '2024-06-12', '未完成'),
-       (6, '大床房', '0103', 1, '2024-06-08', '2024-06-09', '未完成'),
-       (7, '双人间', '0108', 1, '2024-06-05', '2024-06-06', '已完成'),
-       (7, '大床房', '0101', 1, '2024-06-15', '2024-06-17', '未完成'),
-       (8, '大床房', '0104', 1, '2024-06-06', '2024-06-07', '已完成');
+VALUES (1, '大床房', '0101', 1, '2024-11-18', '2024-11-19', '已完成'),
+       (2, '双人间', '0107', 2, '2024-11-22', '2024-11-23', '未完成'),
+       (3, '大床房', '0102', 1, '2024-11-18', '2024-11-19', '已完成'),
+       (4, '豪华大床房', '0105', 1, '2024-11-22', '2024-11-23', '未完成'),
+       (5, '大床房', '0103', 1, '2024-11-19', '2024-11-20', '已完成'),
+       (5, '豪华大床房', '0106', 1, '2024-11-24', '2024-11-25', '未完成'),
+       (6, '大床房', '0103', 1, '2024-11-21', '2024-11-22', '未完成'),
+       (7, '双人间', '0108', 1, '2024-11-18', '2024-11-19', '已完成'),
+       (7, '大床房', '0101', 1, '2024-11-28', '2024-11-30', '未完成'),
+       (8, '大床房', '0104', 1, '2024-11-19', '2024-11-20', '已完成');
 
 -- 占用表
 DROP TABLE IF EXISTS occupancies;
@@ -167,11 +177,11 @@ CREATE TABLE occupancies
     FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE
 );
 INSERT INTO occupancies (customer_id, room_id, start_time, end_time)
-VALUES (2, '0107', '2024-06-09', '2024-06-10'),
-       (4, '0105', '2024-06-09', '2024-06-10'),
-       (5, '0205', '2024-06-11', '2024-06-12'),
-       (6, '0101', '2024-06-08', '2024-06-09'),
-       (7, '0102', '2024-06-15', '2024-06-17');
+VALUES (2, '0107', '2024-11-22', '2024-11-23'),
+       (4, '0105', '2024-11-22', '2024-11-23'),
+       (5, '0205', '2024-11-24', '2024-11-25'),
+       (6, '0101', '2024-11-21', '2024-11-22'),
+       (7, '0102', '2024-11-28', '2024-11-30');
 
 -- 入住表
 DROP TABLE IF EXISTS checkins;
@@ -189,11 +199,11 @@ CREATE TABLE checkins
     FOREIGN KEY (room_id) REFERENCES room (room_id)
 );
 INSERT INTO checkins (customer_id, room_id, checkin_time, departure_time, is_change, preid, rstatus)
-VALUES (1, '0101', '2024-06-05', '2024-06-06', 0, null, '未完成'),
-       (3, '0102', '2024-06-05', '2024-06-06', 0, null, '未完成'),
-       (5, '0101', '2024-06-06', '2024-06-07', 0, null, '未完成'),
-       (7, '0107', '2024-06-05', '2024-06-06', 0, null, '未完成'),
-       (8, '0201', '2024-06-06', '2024-06-07', 0, null, '未完成');
+VALUES (1, '0101', '2024-11-18', '2024-11-19', 0, null, '未完成'),
+       (3, '0102', '2024-11-18', '2024-11-19', 0, null, '未完成'),
+       (5, '0101', '2024-11-19', '2024-11-20', 0, null, '未完成'),
+       (7, '0107', '2024-11-18', '2024-11-19', 0, null, '未完成'),
+       (8, '0201', '2024-11-19', '2024-11-20', 0, null, '未完成');
 
 -- 账单表
 DROP TABLE IF EXISTS bills;
@@ -206,11 +216,11 @@ CREATE TABLE bills
     FOREIGN KEY (checkin_id) REFERENCES checkins (checkin_id)
 );
 INSERT INTO bills (checkin_id, payment_time, payment_amount)
-VALUES (1, '2024-06-06 10:20:00', 135),
-       (2, '2024-06-06 11:07:50', 150),
-       (3, '2024-06-07 11:20:00', 135),
-       (4, '2024-06-06 12:00:00', 320),
-       (5, '2024-06-07 10:30:00', 150);
+VALUES (1, '2024-11-19 10:20:00', 135),
+       (2, '2024-11-19 11:07:50', 150),
+       (3, '2024-11-20 11:20:00', 135),
+       (4, '2024-11-19 12:00:00', 320),
+       (5, '2024-11-20 10:30:00', 150);
 
 -- 账号表
 DROP TABLE IF EXISTS account;
