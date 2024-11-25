@@ -169,5 +169,16 @@ CREATE TABLE account
     employee_id INT           NOT NULL PRIMARY KEY,
     account     VARCHAR(20)   NOT NULL,
     password    VARCHAR(20)   NOT NULL,
-    level       INT DEFAULT 2 not null
+    level       INT DEFAULT 2 NOT NULL
 );
+
+-- 11同居表
+DROP TABLE IF EXISTS cohabit;
+CREATE TABLE cohabit
+(
+    occupancy_id INT NOT NULL,
+    customer_id  INT NOT NULL,
+    FOREIGN KEY (occupancy_id) REFERENCES occupancies (occupancy_id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE,
+    PRIMARY KEY (occupancy_id, customer_id)
+)

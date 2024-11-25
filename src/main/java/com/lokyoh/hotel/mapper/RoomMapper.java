@@ -1,5 +1,6 @@
 package com.lokyoh.hotel.mapper;
 
+import com.lokyoh.hotel.entity.Checkins;
 import com.lokyoh.hotel.entity.Occupancies;
 import com.lokyoh.hotel.entity.Reservations;
 import com.lokyoh.hotel.entity.Room;
@@ -20,8 +21,8 @@ public interface RoomMapper {
     List<Occupancies> getNowOccupy();
 
     ///  获取房间占用情况
-    @Select("select * from occupancies where room_id=#{roomId}")
-    List<Occupancies> getRoomOccupied(String roomId);
+    @Select("select occupancy_id from occupancies where room_id=#{roomId}")
+    List<Integer> getRoomOccupied(String roomId);
 
     /// 添加新的预定
     @Insert("insert into reservations (customer_id, rtype, room_id, number_of_guests, expected_checkin, expected_checkout)" +
@@ -36,4 +37,16 @@ public interface RoomMapper {
     @Insert("insert into occupancies (customer_id, room_id, start_time, end_time)" +
             " values (#{customerId}, #{roomId}, #{startTime}, #{endTime})")
     void newOccupancy(Occupancies occupancies);
+
+    /// 新建入住
+    @Insert("insert into checkins (customer_id, room_id, checkin_time, departure_time, preid)" +
+            " values (#{customerId}, #{roomId}, #{checkinTime}, #{departureTime}, #{preid})")
+    void newCheckin(Checkins checkins);
+
+    /// 获取最近占用房间信息
+    @Select("select * from occupancies where start_time=(select MIN(start_time) from occupancies where room_id=#{roomId}) and room_id=#{roomId}")
+    Occupancies getOccupancies(String roomId);
+
+    @Select("select customer_id from cohabit where occupancy_id=#{occupancyId}")
+    List<Integer> getCohabitUserId(Integer occupancyId);
 }

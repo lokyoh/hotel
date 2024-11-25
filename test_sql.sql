@@ -90,26 +90,36 @@ CREATE TABLE customers
 );
 INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
 VALUES ('330324200407010001', '王佳妮', '女', '甘肃省兰州市AA街道', '19817132000', '二级会员', 2200)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('330311200410010010', '黄振奇', '男', '江苏省扬州市AA街道', '18817132011', '二级会员', 1100)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('330111197806220999', '李志玲', '女', '四川省成都市AA街道', '18806872000', '普通', 200)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('320326197607110201', '陈诗诗', '女', '陕西省太原市AA街道', '19806874020', '一级会员', 3320)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('215687200102010079', '叶雨莎', '女', '浙江省温州市AA街道', '18893062000', '二级会员', 1200)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('221235200207090103', '王爱莎', '女', '浙江省台州市AA街道', '13945682620', '二级会员', 1800)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('330324199410120020', '孙慕钦', '男', '云南省丽江市AA街道', '19819452000', '一级会员', 4500)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('330324198406050521', '黄佳妮', '女', '云南省西双版纳AA街道', '19893130180', '普通', 500)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('210015197708010000', '张起灵', '男', '福建省厦门市AA街道', '16945687912', '二级会员', 1200)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('230064197807010210', '无邪', '男', '安徽省黄山市AA街道', '19826257132', '普通', 350)
-;INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
- VALUES ('330046196504110035', '薛芳芳', '女', '甘肃省天水市AA街道', '17171071523', '二级会员', 1200);
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('330311200410010010', '黄振奇', '男', '江苏省扬州市AA街道', '18817132011', '二级会员', 1100)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('330111197806220999', '李志玲', '女', '四川省成都市AA街道', '18806872000', '普通', 200)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('320326197607110201', '陈诗诗', '女', '陕西省太原市AA街道', '19806874020', '一级会员', 3320)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('215687200102010079', '叶雨莎', '女', '浙江省温州市AA街道', '18893062000', '二级会员', 1200)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('221235200207090103', '王爱莎', '女', '浙江省台州市AA街道', '13945682620', '二级会员', 1800)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('330324199410120020', '孙慕钦', '男', '云南省丽江市AA街道', '19819452000', '一级会员', 4500)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('330324198406050521', '黄佳妮', '女', '云南省西双版纳AA街道', '19893130180', '普通', 500)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('210015197708010000', '张起灵', '男', '福建省厦门市AA街道', '16945687912', '二级会员', 1200)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('230064197807010210', '无邪', '男', '安徽省黄山市AA街道', '19826257132', '普通', 350)
+;
+INSERT INTO customers (identification, cname, gender, caddress, phone, membership, total_spent)
+VALUES ('330046196504110035', '薛芳芳', '女', '甘肃省天水市AA街道', '17171071523', '二级会员', 1200);
 
 -- 员工表
 DROP TABLE IF EXISTS employees;
@@ -235,3 +245,16 @@ INSERT INTO account
 VALUES (1, '987654', '123456789', 2),
        (2, '876543', '123456798', 1),
        (3, '765432', '323456798', 2);
+
+-- 同居表
+DROP TABLE IF EXISTS cohabit;
+CREATE TABLE cohabit
+(
+    occupancy_id INT NOT NULL,
+    customer_id  INT NOT NULL,
+    FOREIGN KEY (occupancy_id) REFERENCES occupancies (occupancy_id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE,
+    PRIMARY KEY (occupancy_id, customer_id)
+);
+INSERT INTO cohabit
+VALUES (1, 1);

@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 @RestController
 @RequestMapping("/worker")
@@ -62,49 +60,7 @@ public class WorkerController {
 
     @GetMapping("/rooms")
     public Result<Object> getRooms() {
-        Rooms rooms = new Rooms();
-
-        // 获取房间
-        List<Room> roomList = roomService.getRooms();
-        rooms.setCount(roomList.size());
-
-        // 获取入住,预定表
-        List<Occupancies> occupanciesList = roomService.getNowOccupy();
-        Map<String, Occupancies> checkInRooms = new HashMap<>();
-        Map<String, Occupancies> reserveRooms = new HashMap<>();
-        occupanciesList.forEach(occupancy -> {
-            String roomId = occupancy.getRoomId();
-            if (!checkInRooms.containsKey(roomId)) {
-                if (!occupancy.getStartTime().isAfter(LocalDate.now())) {
-                    checkInRooms.put(roomId, occupancy);
-                } else if (reserveRooms.containsKey(roomId)) {
-                    if (reserveRooms.get(roomId).getStartTime().isAfter(occupancy.getStartTime())) {
-                        reserveRooms.put(roomId, occupancy);
-                    }
-                }else {
-                    reserveRooms.put(roomId, occupancy);
-                }
-            }
-        });
-
-        // 填入房间数据
-        List<RoomInfo> roomInfoList = roomList.stream()
-                .map(room -> {
-                    String roomId = room.getRoomId();
-                    int status = 0;
-                    String customer = null;
-                    if (checkInRooms.containsKey(roomId)) {
-                        status = 1;
-                        customer = userService.getCustomerNameById(checkInRooms.get(roomId).getCustomerId());
-                    }else if(reserveRooms.containsKey(roomId)) {
-                        status = 2;
-                        customer = userService.getCustomerNameById(reserveRooms.get(roomId).getCustomerId());
-                    }
-                    return new RoomInfo(roomId, room.getRoomId(), status, customer);
-                }).toList();
-        rooms.setRooms(roomInfoList);
-
-        return Result.success(rooms);
+        return Result.success(roomService.getRooms());
     }
 
     @PostMapping("/newReservation")
@@ -117,7 +73,38 @@ public class WorkerController {
     }
 
     @PostMapping("/newCheckin")
-    public Result<String> newCheckin(Checkins checkins) {
+    public Result<String> newCheckin(@RequestBody Checkins checkins) {
+        if (roomService.checkRoom(checkins.getRoomId())) {
+            roomService.newCheckin(checkins);
+            return Result.success();
+        }
         return Result.error("房间已被占用");
+    }
+
+    @PostMapping("/userId")
+    public Result<Object> getUserId(String cname, String identification){
+        Integer userId = userService.getCustomerIdByInfo(cname, identification);
+        if (userId == null) {
+            return Result.error("找不到指定信息");
+        }
+        return Result.success(userId);
+    }
+
+    @PostMapping("/roomInfo")
+    public Result<Object> getRoomInfo(String roomId){
+        RoomDetail detail = roomService.getOccupyInfo(roomId);
+        if (detail == null) {
+            return Result.error("未找到指定房间");
+        }
+        return Result.success(detail);
+    }
+
+    @PostMapping("/userInfo")
+    public Result<Object> getUserInfo(Integer customerId){
+        Customers customer = userService.getCustomer(customerId);
+        if (customer == null) {
+            return Result.error("找不到指定用户");
+        }
+        return Result.success(customer);
     }
 }

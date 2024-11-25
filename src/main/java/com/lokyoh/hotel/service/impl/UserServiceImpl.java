@@ -1,5 +1,6 @@
 package com.lokyoh.hotel.service.impl;
 
+import com.lokyoh.hotel.entity.Customers;
 import com.lokyoh.hotel.mapper.UserMapper;
 import com.lokyoh.hotel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,12 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public String getCustomerNameById(Integer customerId) {
-        return userMapper.getCustomerNameById(customerId);
+    public Integer getCustomerIdByInfo(String cname, String identification) {
+        return userMapper.getCustomerIdByInfo(cname, identification);
+    }
+
+    @Override
+    public Customers getCustomer(Integer customerId) {
+        return userMapper.getCustomer(customerId);
     }
 }
