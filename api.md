@@ -349,3 +349,97 @@
     "data": null
 }
 ```
+
+### 2.6 获取用户ID
+
+##### 接口功能:
+
+> 用于获取并验证用户信息
+
+##### 请求路径:
+
+> /api/worker/userId
+
+##### 请求方式:
+
+> POST
+
+##### 请求参数:
+
+| 参数             | 类型     | 必须   | 说明   |
+|:---------------|:-------|:-----|:-----|
+| cname          | string | true | 用户名  |
+| identification | string | true | 身份证号 |
+
+##### 响应类型:
+
+> JSON
+
+##### 响应数据:
+
+| 参数      | 类型     | 必须    | 说明          |
+|:--------|:-------|:------|:------------|
+| code    | number | true  | 响应码,0成功,1失败 |
+| message | string | false | 提示信息        |
+| data    | number | true  | 用户ID        |
+
+##### 接口示例:
+
+> http://localhost:8080/api/worker/userId?cname=无邪&identification=230064197807010210
+
+返回:
+
+```
+{
+    "code": 1,
+    "message": "操作成功",
+    "data": 10
+}
+```
+
+### 2.7 获取指定房间信息
+
+##### 接口功能:
+
+> 用于获取指定房间信息
+
+##### 请求路径:
+
+> /api/worker/roomInfo
+
+##### 请求方式:
+
+> POST
+
+##### 请求参数:
+
+| 参数     | 类型     | 必须   | 说明  |
+|:-------|:-------|:-----|:----|
+| roomId | string | true | 房间号 |
+
+##### 响应类型:
+
+> JSON
+
+##### 响应数据:
+
+| 参数      | 类型     | 必须    | 说明          |
+|:--------|:-------|:------|:------------|
+| code    | number | true  | 响应码,0成功,1失败 |
+| message | string | false | 提示信息        |
+| \|data  | object | true  | 数据体         |
+
+##### 接口示例:
+
+> http://localhost:8080/api/worker/userId?roomId=无邪
+
+返回:
+
+```
+{
+    "code": 1,
+    "message": "操作成功",
+    "data": {
+    }
+}
+```
