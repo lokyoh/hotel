@@ -16,4 +16,10 @@ public interface RoomService {
 
     /// 修改占用表
     void modifyOccupancy(Occupancies oldOccupancies, Occupancies occupancies);
+
+    /// 添加同居客户
+    void addCohabit(Integer occupancyId, Integer customerId);
+
+    // 删除同居用户
+    void delCohabit(Integer occupancyId, Integer customerId);
 }

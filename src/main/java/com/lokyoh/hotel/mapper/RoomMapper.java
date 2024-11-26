@@ -44,10 +44,23 @@ public interface RoomMapper {
 
     /// 修改入住信息
     @Update("update occupancies set room_id=#{occupancies.roomId}, start_time=#{occupancies.startTime}, end_time=#{occupancies.endTime}" +
-            " where room_id=#{oldOccupancies.roomId} and start_time=#{oldOccupancies.startTime} and end_time=#{oldOccupancies.endTime}")
+            " where room_id=#{oldOccupancies.roomId} and start_time=#{oldOccupancies.startTime}")
     void modifyOccupancy(Occupancies oldOccupancies, Occupancies occupancies);
 
     ///  删除占用
     @Delete("delete from occupancies where occupancy_id=#{occupancyId}")
     void delOccupancy(Integer occupancyId);
+
+    /// 获取占用表id
+    @Select("select occupancy_id from occupancies where room_id=#{roomId} and start_time=#{startTime}")
+    Integer getOccupancyId(String roomId, LocalDate startTime);
+
+    /// 添加同居
+    @Insert("insert into cohabit (occupancy_id, customer_id)" +
+            " values (#{occupancyId}, #{customerId})")
+    void addCohabit(Integer occupancyId, Integer customerId);
+
+    // 删除同居
+    @Delete("delete from cohabit where occupancy_id=#{occupancyId} and customer_id=#{customerId}")
+    void delCohabit(Integer occupancyId, Integer customerId);
 }

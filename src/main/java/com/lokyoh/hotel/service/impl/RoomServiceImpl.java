@@ -105,4 +105,14 @@ public class RoomServiceImpl implements RoomService {
         }
         roomMapper.modifyOccupancy(oldOccupancies, occupancies);
     }
+
+    @Override
+    public void addCohabit(Integer occupancyId, Integer customerId) {
+        roomMapper.addCohabit(occupancyId, customerId);
+    }
+
+    @Override
+    public void delCohabit(Integer occupancyId, Integer customerId) {
+        roomMapper.delCohabit(occupancyId, customerId);
+    }
 }

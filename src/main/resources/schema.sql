@@ -112,11 +112,11 @@ CREATE TABLE reservations
 (
     reservation_id    INT                          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     customer_id       INT                          NOT NULL,
-    rtype             VARCHAR(20) DEFAULT '大床房' not null,
+    rtype             VARCHAR(20) DEFAULT '大床房'  not null,
     room_id           CHAR(4),
     expected_checkin  DATE                         NOT NULL,
     expected_checkout DATE                         NOT NULL,
-    rstatus           VARCHAR(20) DEFAULT '未完成' not null,
+    rstatus           VARCHAR(20) DEFAULT '未完成'  NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES customers (customer_id),
     Foreign Key (rtype) references roomtype (rtype)
 );
@@ -145,7 +145,7 @@ CREATE TABLE checkins
     departure_time DATE                         NOT NULL,
     is_change      INT         DEFAULT 0,
     preid          CHAR(10)                     null,
-    rstatus        VARCHAR(20) DEFAULT '未完成' not null,
+    rstatus        VARCHAR(20) DEFAULT '未完成'  not null,
     FOREIGN KEY (customer_id) REFERENCES customers (customer_id),
     FOREIGN KEY (room_id) REFERENCES room (room_id)
 );

@@ -22,11 +22,7 @@ public class ReservationServiceImpl implements ReservationService {
     public void add(Reservations reservations) {
         reservations.setRtype(roomMapper.getRoomType(reservations.getRoomId()));
         reservationMapper.add(reservations);
-        Occupancies occupancies = new Occupancies();
-        occupancies.setCustomerId(reservations.getCustomerId());
-        occupancies.setRoomId(reservations.getRoomId());
-        occupancies.setStartTime(reservations.getExpectedCheckin());
-        occupancies.setEndTime(reservations.getExpectedCheckout());
+        Occupancies occupancies = new Occupancies(reservations);
         roomMapper.addOccupancy(occupancies);
     }
 
@@ -37,16 +33,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void modify(Reservations oldReservations, Reservations reservations) {
-        Occupancies oldOccupancies = new Occupancies();
-        oldOccupancies.setCustomerId(oldReservations.getCustomerId());
-        oldOccupancies.setRoomId(oldReservations.getRoomId());
-        oldOccupancies.setStartTime(oldReservations.getExpectedCheckin());
-        oldOccupancies.setEndTime(oldReservations.getExpectedCheckout());
-        Occupancies occupancies = new Occupancies();
-        occupancies.setCustomerId(reservations.getCustomerId());
-        occupancies.setRoomId(reservations.getRoomId());
-        occupancies.setStartTime(reservations.getExpectedCheckin());
-        occupancies.setEndTime(reservations.getExpectedCheckout());
+        Occupancies oldOccupancies = new Occupancies(oldReservations);
+        Occupancies occupancies = new Occupancies(reservations);
         roomService.modifyOccupancy(oldOccupancies, occupancies);
         reservations.setRtype(roomMapper.getRoomType(reservations.getRoomId()));
         reservationMapper.modify(reservations);
@@ -54,7 +42,14 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void cancel(Reservations reservation) {
-        roomMapper.delOccupancy(1);
+        Integer occupancyId = roomMapper.getOccupancyId(reservation.getRoomId(), reservation.getExpectedCheckin());
+        roomMapper.delOccupancy(occupancyId);
         reservationMapper.cancel(reservation.getReservationId());
+    }
+
+    @Override
+    public Integer getOccupancyId(Integer id, Integer customerId) {
+        Reservations reservation = get(id, customerId);
+        return roomMapper.getOccupancyId(reservation.getRoomId(), reservation.getExpectedCheckin());
     }
 }

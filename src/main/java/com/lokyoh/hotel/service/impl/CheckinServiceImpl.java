@@ -19,11 +19,18 @@ public class CheckinServiceImpl implements CheckinService {
     public void add(Checkins checkins) {
         checkins.setPreid("null");
         checkinMapper.add(checkins);
-        Occupancies occupancies = new Occupancies();
-        occupancies.setCustomerId(checkins.getCustomerId());
-        occupancies.setRoomId(checkins.getRoomId());
-        occupancies.setStartTime(checkins.getCheckinTime());
-        occupancies.setEndTime(checkins.getDepartureTime());
+        Occupancies occupancies = new Occupancies(checkins);
         roomMapper.addOccupancy(occupancies);
+    }
+
+    @Override
+    public Checkins get(Integer checkinId, Integer customerId) {
+        return checkinMapper.get(checkinId, customerId);
+    }
+
+    @Override
+    public Integer getOccupancyId(Integer checkinId, Integer customerId) {
+        Checkins checkins = get(checkinId, customerId);
+        return roomMapper.getOccupancyId(checkins.getRoomId(), checkins.getCheckinTime());
     }
 }

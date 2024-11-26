@@ -1,9 +1,7 @@
 package com.lokyoh.hotel.controller.worker;
 
 import com.lokyoh.hotel.entity.*;
-import com.lokyoh.hotel.service.RoomService;
-import com.lokyoh.hotel.service.UserService;
-import com.lokyoh.hotel.service.WorkerService;
+import com.lokyoh.hotel.service.*;
 import com.lokyoh.hotel.utils.JwtUtil;
 import com.lokyoh.hotel.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
@@ -24,6 +22,10 @@ public class WorkerController {
     private RoomService roomService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ReservationService reservationService;
+    @Autowired
+    private CheckinService checkinService;
 
     @PostMapping("/login")
     public Result<String> login(@Pattern(regexp = "\\S{5,16}$") String account, @Pattern(regexp = "\\S{5,16}$") String password) {
@@ -81,5 +83,21 @@ public class WorkerController {
             return Result.error("找不到指定用户");
         }
         return Result.success(customer);
+    }
+
+    @PostMapping("/addCustomer")
+    public Result<String> addCustomer(Integer type, Integer id, Integer customerId, Integer newCustomerId) {
+        Integer occupancyId = type == 0?reservationService.getOccupancyId(id, customerId):checkinService.getOccupancyId(id, customerId);
+        if (occupancyId == null) return Result.error("找不到指定房间");
+        roomService.addCohabit(occupancyId, newCustomerId);
+        return Result.success();
+    }
+
+    @PostMapping("/delCustomer")
+    public Result<String> delCustomer(Integer type, Integer id, Integer customerId, Integer targetCustomerId) {
+        Integer occupancyId = type == 0?reservationService.getOccupancyId(id, customerId):checkinService.getOccupancyId(id, customerId);
+        if (occupancyId == null) return Result.error("找不到指定房间");
+        roomService.delCohabit(occupancyId, targetCustomerId);
+        return Result.success();
     }
 }
