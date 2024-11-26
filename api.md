@@ -38,13 +38,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/user/register?&
+> http://localhost:8080/api/user/register?&
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": null
 }
@@ -83,13 +83,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/user/login?&
+> http://localhost:8080/api/user/login?&
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": {
         "": ""
@@ -134,7 +134,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": {
         "customerId": "2",
@@ -150,6 +150,8 @@
 ```
 
 ## 2 员工接口
+
+> 12完成，0待测试，16未完成，2废弃
 
 ### 2.1 员工登录
 
@@ -192,7 +194,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsiaWQiOm51bGwsImFjY291bnQiOiI5ODc2NTQifSwiZXhwIjoxNzMyNTIwMTU0fQ.TFi0PwvEqzg0VKIqWgkQJq-Df3ZVN8s30aASb6J1OJU"
 }
@@ -241,7 +243,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": {
         "employeeId": 1,
@@ -291,7 +293,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": {
         "count": 1,
@@ -319,7 +321,7 @@
 
 ##### 请求方式:
 
-> POST
+> PUT
 
 ##### 请求参数:
 
@@ -348,7 +350,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": null
 }
@@ -366,7 +368,7 @@
 
 ##### 请求方式:
 
-> POST
+> PUT
 
 ##### 请求体:
 
@@ -395,7 +397,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": null
 }
@@ -442,7 +444,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 10
 }
@@ -494,7 +496,7 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": {
         "roomID": "0107",
@@ -551,13 +553,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/userInfo?customerId=2
+> http://localhost:8080/api/worker/userInfo?customerId=2
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": {
         "customerId": "2",
@@ -584,7 +586,7 @@
 
 ##### 请求方式:
 
-> POST
+> PUT
 
 ##### 请求参数:
 
@@ -612,13 +614,13 @@
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": null
 }
 ```
 
-### 2.10 取消预定-
+### 2.10 取消预定
 
 ##### 接口功能:
 
@@ -653,19 +655,19 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/reservation/cancel?reservationId=2&customerId=2
+> http://localhost:8080/api/worker/reservation/cancel?reservationId=2&customerId=2
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": null
 }
 ```
 
-### 2.11 添加客人-
+### 2.11 添加客人
 
 ##### 接口功能:
 
@@ -702,19 +704,19 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/addCustomer?type=0&id=2&customerId=&newCustomerId=
+> http://localhost:8080/api/worker/addCustomer?type=0&id=2&customerId=2&newCustomerId=11
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": null
 }
 ```
 
-### 2.12 删除客人-
+### 2.12 删除客人
 
 ##### 接口功能:
 
@@ -751,19 +753,19 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/delCustomer?type=0&id=2&customerId=&newCustomerId=
+> http://localhost:8080/api/worker/delCustomer?type=0&id=2&customerId=2&targetCustomerId=11
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": null
 }
 ```
 
-### 2.13 获取换房信息x
+### 2.13 换房x
 
 ##### 接口功能:
 
@@ -771,7 +773,7 @@
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/change
 
 ##### 请求方式:
 
@@ -779,8 +781,12 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数           | 类型     | 必须   | 说明        |
+|:-------------|:-------|:-----|:----------|
+| type         | number | true | 0预定表,1入住表 |
+| id           | number | true | 表中id      |
+| customerId   | number | true | 客户id      |
+| targetRoomId | string | true | 目标房间id    |
 
 ##### 响应类型:
 
@@ -792,23 +798,23 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | false | null        |
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/change
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 
-### 2.14 换房x
+### 2.14 (废弃API)x
 
 ##### 接口功能:
 
@@ -841,19 +847,19 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
 ```
 
-### 2.15 获取退房信息x
+### 2.15 (废弃API)x
 
 ##### 接口功能:
 
@@ -886,13 +892,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -902,11 +908,11 @@
 
 ##### 接口功能:
 
->
+> 用于员工退房
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/checkout
 
 ##### 请求方式:
 
@@ -914,8 +920,11 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数         | 类型     | 必须   | 说明        |
+|:-----------|:-------|:-----|:----------|
+| type       | number | true | 0预定表,1入住表 |
+| id         | number | true | 表中id      |
+| customerId | number | true | 客户id      |
 
 ##### 响应类型:
 
@@ -927,19 +936,19 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | true  | null        |
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/checkout
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 
@@ -947,11 +956,11 @@
 
 ##### 接口功能:
 
->
+> 用于获取预定信息
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/reservation/list
 
 ##### 请求方式:
 
@@ -961,6 +970,7 @@
 
 | 参数         | 类型     | 必须   | 说明       |
 |:-----------|:-------|:-----|:---------|
+|            |        |      |          |
 
 ##### 响应类型:
 
@@ -976,13 +986,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/reservation/list
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1021,13 +1031,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1066,13 +1076,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1111,13 +1121,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1156,13 +1166,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1201,13 +1211,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1246,13 +1256,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1291,13 +1301,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1336,13 +1346,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1381,13 +1391,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1426,13 +1436,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1471,13 +1481,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1516,13 +1526,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }
@@ -1561,13 +1571,13 @@
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://localhost:8080/api/worker/
 
 返回:
 
 ```
 {
-    "code": 1,
+    "code": 0,
     "message": "操作成功",
     "data": 
 }

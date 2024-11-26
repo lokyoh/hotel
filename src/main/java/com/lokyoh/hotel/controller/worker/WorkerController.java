@@ -100,4 +100,48 @@ public class WorkerController {
         roomService.delCohabit(occupancyId, targetCustomerId);
         return Result.success();
     }
+
+    @PostMapping("/change")
+    public Result<String> changeRoom(Integer type, Integer id, Integer customerId, String newRoomId) {
+        // 先新建订单再取消原有订单,修改占用
+        if (type==0){
+            Reservations reservation = reservationService.get(id, customerId);
+            if (reservation == null) return Result.error("找不到指定预定单");
+            if (!roomService.checkRoom(reservation.getRoomId(), reservation.getExpectedCheckin(), reservation.getExpectedCheckout()))
+                return Result.error("指定房间无法更换");
+            String oldRoomId = reservation.getRoomId();
+            reservation.setRoomId(newRoomId);
+            reservationService.add(reservation);
+            reservation.setRoomId(oldRoomId);
+            reservationService.cancel(reservation);
+        } else {
+            Checkins checkin = checkinService.get(id, customerId);
+            if (checkin == null) return Result.error("找不到指定入住单");
+            if (!roomService.checkRoom(checkin.getRoomId(), checkin.getCheckinTime(), checkin.getDepartureTime()))
+                return Result.error("指定房间无法更换");
+            String oldRoomId = checkin.getRoomId();
+            checkin.setRoomId(newRoomId);
+            checkinService.add(checkin);
+            checkin.setRoomId(oldRoomId);
+            // checkinService.cancel(checkin);
+        }
+        return Result.success();
+    }
+
+    @PostMapping("/checkout")
+    public Result<String> checkout(Integer type, Integer id, Integer customerId) {
+        // 修改信息并删除占用
+        Integer oId;
+        if (type==0){
+            oId = reservationService.getOccupancyId(id, customerId);
+            if (oId == null) return Result.error("找不到指定预定单");
+            // reservationService.checkout(id);
+        } else {
+            oId = checkinService.getOccupancyId(id, customerId);
+            if (oId == null) return Result.error("找不到指定入住单");
+            // checkinService.checkout(id);
+        }
+//        roomService.delOccupancy(oId);
+        return Result.success();
+    }
 }

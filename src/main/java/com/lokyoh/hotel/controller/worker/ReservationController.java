@@ -6,10 +6,7 @@ import com.lokyoh.hotel.service.ReservationService;
 import com.lokyoh.hotel.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("worker/reservation")
@@ -20,7 +17,7 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping("/add")
+    @PutMapping("/add")
     public Result<String> newReservation(@RequestBody Reservations reservations) {
         if(reservations.getExpectedCheckin().isAfter(reservations.getExpectedCheckout())) return Result.error("时间错误");
         if (roomService.checkRoom(reservations.getRoomId(), reservations.getExpectedCheckin(), reservations.getExpectedCheckout())) {
@@ -30,12 +27,12 @@ public class ReservationController {
         return Result.error("房间已被占用");
     }
 
-    @PostMapping("/modify")
+    @PutMapping("/modify")
     public Result<String> modifyReservation(@RequestBody Reservations reservations) {
         if(reservations.getExpectedCheckin().isAfter(reservations.getExpectedCheckout())) return Result.error("时间错误");
         Reservations oldReservation = reservationService.get(reservations.getReservationId(), reservations.getCustomerId());
         if (oldReservation == null) return Result.error("找不到指定预定单");
-        if (oldReservation.getRstatus().equals("已完成")) return Result.error("指定账单无法修改");
+        if (!oldReservation.getRstatus().equals("未完成")) return Result.error("指定账单无法修改");
         try{
             reservationService.modify(oldReservation, reservations);
         }catch (Exception e) {
@@ -48,7 +45,7 @@ public class ReservationController {
     public Result<String> cancelReservation(Integer reservationId, Integer customerId) {
         Reservations reservation = reservationService.get(reservationId, customerId);
         if (reservation == null) return Result.error("找不到指定预定单");
-        if (!reservation.getRtype().equals("未完成")) return Result.error("此账单无法取消");
+        if (!reservation.getRstatus().equals("未完成")) return Result.error("此账单无法取消");
         reservationService.cancel(reservation);
         return Result.success();
     }

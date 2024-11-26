@@ -6,10 +6,7 @@ import com.lokyoh.hotel.service.CheckinService;
 import com.lokyoh.hotel.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("worker/checkin")
@@ -20,7 +17,7 @@ public class CheckinController {
     @Autowired
     private CheckinService checkinService;
 
-    @PostMapping("/add")
+    @PutMapping("/add")
     public Result<String> newCheckin(@RequestBody Checkins checkins) {
         if (checkins.getCheckinTime().isAfter(checkins.getDepartureTime())) return Result.error("时间错误");
         if (roomService.checkRoom(checkins.getRoomId(), checkins.getCheckinTime(), checkins.getDepartureTime())) {
