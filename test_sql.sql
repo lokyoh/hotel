@@ -155,24 +155,23 @@ CREATE TABLE reservations
     customer_id       INT                          NOT NULL,
     rtype             VARCHAR(20) DEFAULT '大床房' not null,
     room_id           CHAR(4),
-    number_of_guests  INT                          NOT NULL,
     expected_checkin  DATE                         NOT NULL,
     expected_checkout DATE                         NOT NULL,
     rstatus           VARCHAR(20) DEFAULT '未完成' not null,
     FOREIGN KEY (customer_id) REFERENCES customers (customer_id),
     Foreign Key (rtype) references roomtype (rtype)
 );
-INSERT INTO reservations (customer_id, rtype, room_id, number_of_guests, expected_checkin, expected_checkout, rstatus)
-VALUES (1, '大床房', '0101', 1, '2024-11-18', '2024-11-19', '已完成'),
-       (2, '双人间', '0107', 2, '2024-11-22', '2024-11-23', '未完成'),
-       (3, '大床房', '0102', 1, '2024-11-18', '2024-11-19', '已完成'),
-       (4, '豪华大床房', '0105', 1, '2024-11-22', '2024-11-23', '未完成'),
-       (5, '大床房', '0103', 1, '2024-11-19', '2024-11-20', '已完成'),
-       (5, '豪华大床房', '0106', 1, '2024-11-24', '2024-11-25', '未完成'),
-       (6, '大床房', '0103', 1, '2024-11-21', '2024-11-22', '未完成'),
-       (7, '双人间', '0108', 1, '2024-11-18', '2024-11-19', '已完成'),
-       (7, '大床房', '0101', 1, '2024-11-28', '2024-11-30', '未完成'),
-       (8, '大床房', '0104', 1, '2024-11-19', '2024-11-20', '已完成');
+INSERT INTO reservations (customer_id, rtype, room_id, expected_checkin, expected_checkout, rstatus)
+VALUES (1, '大床房', '0101', '2024-11-18', '2024-11-19', '已完成'),
+       (2, '双人间', '0107', '2024-11-22', '2024-11-23', '未完成'),
+       (3, '大床房', '0102', '2024-11-18', '2024-11-19', '已完成'),
+       (4, '豪华大床房', '0105', '2024-11-22', '2024-11-23', '未完成'),
+       (5, '大床房', '0103', '2024-11-19', '2024-11-20', '已完成'),
+       (5, '豪华大床房', '0106', '2024-11-24', '2024-11-25', '未完成'),
+       (6, '大床房', '0103', '2024-11-21', '2024-11-22', '未完成'),
+       (7, '双人间', '0108',  '2024-11-18', '2024-11-19', '已完成'),
+       (7, '大床房', '0101', '2024-11-28', '2024-11-30', '未完成'),
+       (8, '大床房', '0104', '2024-11-19', '2024-11-20', '已完成');
 
 -- 占用表
 DROP TABLE IF EXISTS occupancies;

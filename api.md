@@ -315,7 +315,7 @@
 
 ##### 请求路径:
 
-> /api/worker/newReservation
+> /api/worker/reservation/new
 
 ##### 请求方式:
 
@@ -327,7 +327,6 @@
 |:-----------------|:-------|:-----|:-------|
 | customerId       | number | true | 客户名    |
 | roomId           | string | true | 房间名    |
-| numberOfGuests   | number | true | 客户数量   |
 | expectedCheckin  | date   | true | 预期入住时间 |
 | expectedCheckout | date   | true | 预期离开时间 |
 
@@ -363,7 +362,7 @@
 
 ##### 请求路径:
 
-> /api/worker/newCheckin
+> /api/worker/checkin/new
 
 ##### 请求方式:
 
@@ -573,15 +572,15 @@
 }
 ```
 
-### 2.9 修改预定信息x
+### 2.9 修改预定信息
 
 ##### 接口功能:
 
-> 
+> 用于员工修改预定信息
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/reservation/modify
 
 ##### 请求方式:
 
@@ -589,8 +588,13 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数               | 类型     | 必须   | 说明     |
+|:-----------------|:-------|:-----|:-------|
+| reservationId    | number | true | 预定单号   |
+| customerId       | number | true | 客户名    |
+| roomId           | string | true | 房间名    |
+| expectedCheckin  | date   | true | 预期入住时间 |
+| expectedCheckout | date   | true | 预期离开时间 |
 
 ##### 响应类型:
 
@@ -602,11 +606,7 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
-
-##### 接口示例:
-
-> http://server.lokyoh.com:8080/api/worker/
+| data    | null   | false | null        |
 
 返回:
 
@@ -614,7 +614,7 @@
 {
     "code": 1,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 
@@ -622,11 +622,11 @@
 
 ##### 接口功能:
 
->
+> 用于员工取消预定
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/reservation/cancel
 
 ##### 请求方式:
 
@@ -634,8 +634,10 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数            | 类型  | 必须   | 说明    |
+|:--------------|:----|:-----|:------|
+| reservationId | int | true | 预定单id |
+| customerId    | int | true | 用户id  |
 
 ##### 响应类型:
 
@@ -647,11 +649,11 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | false | null        |
 
 ##### 接口示例:
 
-> http://server.lokyoh.com:8080/api/worker/
+> http://server.lokyoh.com:8080/api/worker/reservation/cancel?reservationId=2&customerId=2
 
 返回:
 
@@ -659,7 +661,7 @@
 {
     "code": 1,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 

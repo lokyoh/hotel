@@ -114,7 +114,6 @@ CREATE TABLE reservations
     customer_id       INT                          NOT NULL,
     rtype             VARCHAR(20) DEFAULT '大床房' not null,
     room_id           CHAR(4),
-    number_of_guests  INT                          NOT NULL,
     expected_checkin  DATE                         NOT NULL,
     expected_checkout DATE                         NOT NULL,
     rstatus           VARCHAR(20) DEFAULT '未完成' not null,

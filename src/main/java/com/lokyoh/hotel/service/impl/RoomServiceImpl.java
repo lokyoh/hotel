@@ -29,7 +29,7 @@ public class RoomServiceImpl implements RoomService {
         rooms.setCount(roomList.size());
 
         // 获取入住,预定表
-        List<Occupancies> occupanciesList = roomMapper.getNowOccupy();
+        List<Occupancies> occupanciesList = roomMapper.getAllOccupy();
         Map<String, Occupancies> checkInRooms = new HashMap<>();
         Map<String, Occupancies> reserveRooms = new HashMap<>();
         occupanciesList.forEach(occupancy -> {
@@ -41,7 +41,7 @@ public class RoomServiceImpl implements RoomService {
                     if (reserveRooms.get(roomId).getStartTime().isAfter(occupancy.getStartTime())) {
                         reserveRooms.put(roomId, occupancy);
                     }
-                }else {
+                } else {
                     reserveRooms.put(roomId, occupancy);
                 }
             }
@@ -56,7 +56,7 @@ public class RoomServiceImpl implements RoomService {
                     if (checkInRooms.containsKey(roomId)) {
                         status = 1;
                         customer = userMapper.getCustomerNameById(checkInRooms.get(roomId).getCustomerId());
-                    }else if(reserveRooms.containsKey(roomId)) {
+                    } else if (reserveRooms.containsKey(roomId)) {
                         status = 2;
                         customer = userMapper.getCustomerNameById(reserveRooms.get(roomId).getCustomerId());
                     }
@@ -67,37 +67,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public boolean checkRoom(String roomId) {
-        return roomMapper.getRoomOccupied(roomId).isEmpty();
-    }
-
-    @Override
-    public void newReservation(Reservations reservations) {
-        reservations.setRtype(roomMapper.getRoomType(reservations.getRoomId()));
-        roomMapper.newReservation(reservations);
-        Occupancies occupancies = new Occupancies();
-        occupancies.setCustomerId(reservations.getCustomerId());
-        occupancies.setRoomId(reservations.getRoomId());
-        occupancies.setStartTime(reservations.getExpectedCheckin());
-        occupancies.setEndTime(reservations.getExpectedCheckout());
-        roomMapper.newOccupancy(occupancies);
-    }
-
-    @Override
-    public void newCheckin(Checkins checkins) {
-        checkins.setPreid("null");
-        roomMapper.newCheckin(checkins);
-        Occupancies occupancies = new Occupancies();
-        occupancies.setCustomerId(checkins.getCustomerId());
-        occupancies.setRoomId(checkins.getRoomId());
-        occupancies.setStartTime(checkins.getCheckinTime());
-        occupancies.setEndTime(checkins.getDepartureTime());
-        roomMapper.newOccupancy(occupancies);
+    public boolean checkRoom(String roomId, LocalDate startTime, LocalDate endTime) {
+        return roomMapper.getRoomHasOccupied(roomId, startTime, endTime).isEmpty();
     }
 
     @Override
     public RoomDetail getOccupyInfo(String roomId) {
-        Occupancies occupancy = roomMapper.getOccupancies(roomId);
+        Occupancies occupancy = roomMapper.getResentOccupancies(roomId);
         if (occupancy == null) {
             return null;
         }
@@ -112,5 +88,21 @@ public class RoomServiceImpl implements RoomService {
         roomMapper.getCohabitUserId(occupancy.getOccupancyId()).forEach(customerId -> resident.add(userMapper.getCustomerNameById(customerId)));
         roomDetail.setResident(resident);
         return roomDetail;
+    }
+
+    @Override
+    public void modifyOccupancy(Occupancies oldOccupancies, Occupancies occupancies) {
+        if (oldOccupancies.getRoomId().equals(occupancies.getRoomId())) {
+            roomMapper.getOccupyByRoomId(oldOccupancies.getRoomId()).forEach(occupancy -> {
+                if (!occupancy.getStartTime().isEqual(oldOccupancies.getStartTime())) {
+                    if (!(occupancy.getStartTime().isAfter(occupancies.getEndTime()) || occupancy.getEndTime().isBefore(occupancies.getStartTime())))
+                        throw new RuntimeException("房间已被占用");
+                }
+            });
+        } else {
+            if (!roomMapper.getRoomHasOccupied(occupancies.getRoomId(), occupancies.getStartTime(), occupancies.getEndTime()).isEmpty())
+                throw new RuntimeException("房间已被占用");
+        }
+        roomMapper.modifyOccupancy(oldOccupancies, occupancies);
     }
 }

@@ -14,8 +14,6 @@ public class Reservations {
     @NotNull
     private String roomId;
     @NotNull
-    private Integer numberOfGuests;
-    @NotNull
     private LocalDate expectedCheckin;
     @NotNull
     private LocalDate expectedCheckout;
