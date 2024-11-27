@@ -59,7 +59,10 @@ public class WorkerController {
     }
 
     @PostMapping("/userId")
-    public Result<Object> getUserId(String cname, String identification) {
+    public Result<Object> getUserId(
+            @RequestParam String cname,
+            @RequestParam String identification
+    ) {
         Integer userId = userService.getCustomerIdByInfo(cname, identification);
         if (userId == null) {
             return Result.error("找不到指定信息");
@@ -68,7 +71,7 @@ public class WorkerController {
     }
 
     @PostMapping("/roomInfo")
-    public Result<Object> getRoomInfo(String roomId) {
+    public Result<Object> getRoomInfo(@RequestParam String roomId) {
         RoomDetail detail = roomService.getOccupyInfo(roomId);
         if (detail == null) {
             return Result.error("未找到指定房间");
@@ -77,7 +80,7 @@ public class WorkerController {
     }
 
     @PostMapping("/userInfo")
-    public Result<Object> getUserInfo(Integer customerId) {
+    public Result<Object> getUserInfo(@RequestParam Integer customerId) {
         Customers customer = userService.getCustomer(customerId);
         if (customer == null) {
             return Result.error("找不到指定用户");
@@ -86,62 +89,83 @@ public class WorkerController {
     }
 
     @PostMapping("/addCustomer")
-    public Result<String> addCustomer(Integer type, Integer id, Integer customerId, Integer newCustomerId) {
-        Integer occupancyId = type == 0?reservationService.getOccupancyId(id, customerId):checkinService.getOccupancyId(id, customerId);
+    public Result<String> addCustomer(@RequestParam Integer type,
+                                      @RequestParam Integer id,
+                                      @RequestParam Integer customerId,
+                                      @RequestParam Integer newCustomerId
+    ) {
+        Integer occupancyId = type == 0 ? reservationService.getOccupancyId(id, customerId) : checkinService.getOccupancyId(id, customerId);
         if (occupancyId == null) return Result.error("找不到指定房间");
         roomService.addCohabit(occupancyId, newCustomerId);
         return Result.success();
     }
 
     @PostMapping("/delCustomer")
-    public Result<String> delCustomer(Integer type, Integer id, Integer customerId, Integer targetCustomerId) {
-        Integer occupancyId = type == 0?reservationService.getOccupancyId(id, customerId):checkinService.getOccupancyId(id, customerId);
+    public Result<String> delCustomer(@RequestParam Integer type,
+                                      @RequestParam Integer id,
+                                      @RequestParam Integer customerId,
+                                      @RequestParam Integer targetCustomerId
+    ) {
+        Integer occupancyId = type == 0 ? reservationService.getOccupancyId(id, customerId) : checkinService.getOccupancyId(id, customerId);
         if (occupancyId == null) return Result.error("找不到指定房间");
         roomService.delCohabit(occupancyId, targetCustomerId);
         return Result.success();
     }
 
     @PostMapping("/change")
-    public Result<String> changeRoom(Integer type, Integer id, Integer customerId, String newRoomId) {
+    public Result<String> changeRoom(@RequestParam Integer type,
+                                     @RequestParam Integer id,
+                                     @RequestParam Integer customerId,
+                                     @RequestParam String newRoomId
+    ) {
         // 先新建订单再取消原有订单,修改占用
-        if (type==0){
+        if (type == 0) {
             Reservations reservation = reservationService.get(id, customerId);
             if (reservation == null) return Result.error("找不到指定预定单");
-            if (!roomService.checkRoom(reservation.getRoomId(), reservation.getExpectedCheckin(), reservation.getExpectedCheckout()))
+            if (!reservation.getRstatus().equals("未完成")) return Result.error("该预定不可更改");
+            if (!roomService.checkRoom(newRoomId, reservation.getExpectedCheckin(), reservation.getExpectedCheckout()))
                 return Result.error("指定房间无法更换");
             String oldRoomId = reservation.getRoomId();
             reservation.setRoomId(newRoomId);
             reservationService.add(reservation);
             reservation.setRoomId(oldRoomId);
             reservationService.cancel(reservation);
-        } else {
+        } else if (type == 1) {
             Checkins checkin = checkinService.get(id, customerId);
             if (checkin == null) return Result.error("找不到指定入住单");
-            if (!roomService.checkRoom(checkin.getRoomId(), checkin.getCheckinTime(), checkin.getDepartureTime()))
+            if (!checkin.getRstatus().equals("未完成")) return Result.error("该入住不可更改");
+            if (!roomService.checkRoom(newRoomId, checkin.getCheckinTime(), checkin.getDepartureTime()))
                 return Result.error("指定房间无法更换");
             String oldRoomId = checkin.getRoomId();
             checkin.setRoomId(newRoomId);
             checkinService.add(checkin);
             checkin.setRoomId(oldRoomId);
-            // checkinService.cancel(checkin);
+            checkinService.cancel(checkin);
+        } else {
+            return Result.error("类型数值错误");
         }
         return Result.success();
     }
 
     @PostMapping("/checkout")
-    public Result<String> checkout(Integer type, Integer id, Integer customerId) {
+    public Result<String> checkout(@RequestParam Integer type,
+                                   @RequestParam Integer id,
+                                   @RequestParam Integer customerId
+    ) {
         // 修改信息并删除占用
         Integer oId;
-        if (type==0){
+        if (type == 0) {
             oId = reservationService.getOccupancyId(id, customerId);
             if (oId == null) return Result.error("找不到指定预定单");
-            // reservationService.checkout(id);
-        } else {
+            reservationService.checkout(id);
+        } else if (type == 1) {
             oId = checkinService.getOccupancyId(id, customerId);
             if (oId == null) return Result.error("找不到指定入住单");
-            // checkinService.checkout(id);
+            checkinService.checkout(id);
+        } else {
+            return Result.error("类型错误");
         }
-//        roomService.delOccupancy(oId);
+        roomService.delOccupancy(oId);
         return Result.success();
     }
 }

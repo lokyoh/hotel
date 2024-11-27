@@ -151,7 +151,7 @@
 
 ## 2 员工接口
 
-> 12完成，0待测试，16未完成，2废弃
+> 17完成，0待测试，11未完成，2废弃
 
 ### 2.1 员工登录
 
@@ -279,7 +279,7 @@
 | message        | string | false | 提示信息        |
 | \|data         | object | true  | 数据主体        |
 | \|-count       | number | true  | 房间数量        |
-| \|-\|rooms     | list   | true  | 房间信息        |
+| \|-\|items     | list   | true  | 房间信息        |
 | \|-\|-id       | number | true  | 房间号         |
 | \|-\|-type     | string | true  | 房间类型        |
 | \|-\|-state    | number | true  | 房间状态        |
@@ -765,7 +765,7 @@
 }
 ```
 
-### 2.13 换房x
+### 2.13 换房
 
 ##### 接口功能:
 
@@ -781,12 +781,12 @@
 
 ##### 请求参数:
 
-| 参数           | 类型     | 必须   | 说明        |
-|:-------------|:-------|:-----|:----------|
-| type         | number | true | 0预定表,1入住表 |
-| id           | number | true | 表中id      |
-| customerId   | number | true | 客户id      |
-| targetRoomId | string | true | 目标房间id    |
+| 参数         | 类型     | 必须   | 说明        |
+|:-----------|:-------|:-----|:----------|
+| type       | number | true | 0预定表,1入住表 |
+| id         | number | true | 表中id      |
+| customerId | number | true | 客户id      |
+| newRoomId  | string | true | 目标房间id    |
 
 ##### 响应类型:
 
@@ -802,7 +802,7 @@
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/change
+> http://localhost:8080/api/worker/change?type=0&id=2&customerId=2&targetRoomId=0201
 
 返回:
 
@@ -904,7 +904,7 @@
 }
 ```
 
-### 2.16 退房x
+### 2.16 退房
 
 ##### 接口功能:
 
@@ -940,7 +940,7 @@
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/checkout
+> http://localhost:8080/api/worker/checkout?type=0&id=4&customerId=4
 
 返回:
 
@@ -952,7 +952,7 @@
 }
 ```
 
-### 2.17 获取预定表x
+### 2.17 获取预定表
 
 ##### 接口功能:
 
@@ -964,13 +964,17 @@
 
 ##### 请求方式:
 
-> POST
+> GET
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
-|            |        |      |          |
+| 参数       | 类型     | 必须    | 说明                    |
+|:---------|:-------|:------|:----------------------|
+| pageNum  | number | false | 当前页码 大于等于1 默认1        |
+| pageSize | number | false | 每页数目 大于等于1小于等于30 默认10 |
+| phone    | string | false | 手机号                   |
+| roomType | string | false | 房间类型                  |
+| status   | string | false | 预定状态                  |
 
 ##### 响应类型:
 
@@ -978,11 +982,13 @@
 
 ##### 响应数据:
 
-| 参数      | 类型     | 必须    | 说明          |
-|:--------|:-------|:------|:------------|
-| code    | number | true  | 响应码,0成功,1失败 |
-| message | string | false | 提示信息        |
-| data    |        |       |             |
+| 参数       | 类型     | 必须    | 说明          |
+|:---------|:-------|:------|:------------|
+| code     | number | true  | 响应码,0成功,1失败 |
+| message  | string | false | 提示信息        |
+| \|data   | object | true  |             |
+| \|-count | number | true  | 符合条件数据总数    |
+| \|-items | list   | true  | 当前分页数据      |
 
 ##### 接口示例:
 
@@ -994,28 +1000,46 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": {
+        "count": 7,
+        "items": [
+            {
+                "id": 1,
+                "customerId": "330324200407010001",
+                "roomId": "0101",
+                "roomType": "大床房",
+                "startDate": "2024-11-18",
+                "endDate": "2024-11-19",
+                "status": "已完成"
+            }
+        ]
+    }
 }
 ```
 
-### 2.18 获取入住表x
+### 2.18 获取入住表
 
 ##### 接口功能:
 
->
+> 获取入住列表
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/checkin/list
 
 ##### 请求方式:
 
-> POST
+> GET
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数       | 类型     | 必须    | 说明                    |
+|:---------|:-------|:------|:----------------------|
+| pageNum  | number | false | 当前页码 大于等于1 默认1        |
+| pageSize | number | false | 每页数目 大于等于1小于等于30 默认10 |
+| phone    | string | false | 手机号                   |
+| roomType | string | false | 房间类型                  |
+| status   | string | false | 预定状态                  |
 
 ##### 响应类型:
 
@@ -1023,15 +1047,17 @@
 
 ##### 响应数据:
 
-| 参数      | 类型     | 必须    | 说明          |
-|:--------|:-------|:------|:------------|
-| code    | number | true  | 响应码,0成功,1失败 |
-| message | string | false | 提示信息        |
-| data    |        |       |             |
+| 参数       | 类型     | 必须    | 说明          |
+|:---------|:-------|:------|:------------|
+| code     | number | true  | 响应码,0成功,1失败 |
+| message  | string | false | 提示信息        |
+| \|data   | object | true  |             |
+| \|-count | number | true  | 符合条件数据总数    |
+| \|-items | list   | true  | 当前分页数据      |
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/
+> http://localhost:8080/api/worker/checkin/list
 
 返回:
 
@@ -1039,28 +1065,45 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": {
+        "count": 6,
+        "items": [
+            {
+                "id": 1,
+                "customerId": "330324200407010001",
+                "roomId": "0101",
+                "roomType": "大床房",
+                "startDate": "2024-11-18",
+                "endDate": "2024-11-19",
+                "status": "已取消"
+            }
+        ]
+    }
 }
 ```
 
-### 2.19 获取客户表x
+### 2.19 获取客户表
 
 ##### 接口功能:
 
->
+> 获取客户列表
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/customer/list
 
 ##### 请求方式:
 
-> POST
+> GET
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数       | 类型     | 必须    | 说明                    |
+|:---------|:-------|:------|:----------------------|
+| pageNum  | number | false | 当前页码 大于等于1 默认1        |
+| pageSize | number | false | 每页数目 大于等于1小于等于30 默认10 |
+| phone    | string | false | 手机号                   |
+| level    | string | false | 会员等级                  |
 
 ##### 响应类型:
 
@@ -1068,15 +1111,17 @@
 
 ##### 响应数据:
 
-| 参数      | 类型     | 必须    | 说明          |
-|:--------|:-------|:------|:------------|
-| code    | number | true  | 响应码,0成功,1失败 |
-| message | string | false | 提示信息        |
-| data    |        |       |             |
+| 参数       | 类型     | 必须    | 说明          |
+|:---------|:-------|:------|:------------|
+| code     | number | true  | 响应码,0成功,1失败 |
+| message  | string | false | 提示信息        |
+| \|data   | object | true  |             |
+| \|-count | number | true  | 符合条件数据总数    |
+| \|-items | list   | true  | 当前分页数据      |
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/
+> http://localhost:8080/api/worker/customer/list
 
 返回:
 
@@ -1084,7 +1129,21 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": {
+        "count": 11,
+        "items": [
+            {
+                "customerId": 1,
+                "identification": "330324200407010001",
+                "cname": "王佳妮",
+                "gender": "女",
+                "caddress": "甘肃省兰州市AA街道",
+                "phone": "19817132000",
+                "membership": "二级会员",
+                "totalSpent": 2200.00
+            }
+        ]
+    }
 }
 ```
 
@@ -1092,15 +1151,15 @@
 
 ##### 接口功能:
 
->
+> 用于员工添加用户
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/customer/add
 
 ##### 请求方式:
 
-> POST
+> PUT
 
 ##### 请求参数:
 
@@ -1121,7 +1180,7 @@
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/
+> http://localhost:8080/api/worker/customer/add
 
 返回:
 

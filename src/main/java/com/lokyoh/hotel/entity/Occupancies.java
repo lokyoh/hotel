@@ -14,7 +14,7 @@ public class Occupancies {
     private LocalDate startTime;
     private LocalDate endTime;
 
-    public Occupancies(Reservations reservations){
+    public Occupancies(Reservations reservations) {
         this.occupancyId = null;
         this.customerId = reservations.getCustomerId();
         this.roomId = reservations.getRoomId();
@@ -22,7 +22,7 @@ public class Occupancies {
         this.endTime = reservations.getExpectedCheckout();
     }
 
-    public Occupancies(Checkins checkins){
+    public Occupancies(Checkins checkins) {
         this.occupancyId = null;
         this.customerId = checkins.getCustomerId();
         this.roomId = checkins.getRoomId();

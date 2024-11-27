@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 @Mapper
 public interface ReservationMapper {
     /// 添加新的预定
@@ -24,4 +26,11 @@ public interface ReservationMapper {
     /// 取消指定账单
     @Update("update reservations set rstatus='已取消' where reservation_id=#{reservationId}")
     void cancel(Integer reservationId);
+
+    ///  完成预定
+    @Update("update reservations set rstatus='已完成' where reservation_id=#{reservationId}")
+    void checkout(Integer reservationId);
+
+    /// 获取预定列表
+    List<Reservations> list(Integer customerId, String roomType, String status);
 }

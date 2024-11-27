@@ -13,7 +13,7 @@ public class WorkerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Map<String, Object> claims = ThreadLocalUtil.get();
-        if (claims.get("type").equals("worker")||claims.get("type").equals("admin")) return true;
+        if (claims.get("type").equals("worker") || claims.get("type").equals("admin")) return true;
         response.setStatus(403);
         return false;
     }

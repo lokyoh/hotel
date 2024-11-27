@@ -1,8 +1,11 @@
 package com.lokyoh.hotel.mapper;
 
 import com.lokyoh.hotel.entity.Customers;
+import jakarta.validation.constraints.NotNull;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -17,4 +20,14 @@ public interface UserMapper {
     /// 获取指定用户信息
     @Select("select * from customers where customer_id=#{customerId}")
     Customers getCustomer(Integer customerId);
+
+    /// 获取指定用户的id
+    @Select("select identification from customers where customer_id=#{customerId}")
+    String getIdentification(@NotNull Integer customerId);
+
+    /// 根据手机号获取用户ID
+    @Select("select customer_id from customers where phone=#{phone}")
+    Integer getCustomerIdByPhone(String phone);
+
+    List<Customers> list(String phone, String level);
 }

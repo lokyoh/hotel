@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lokyoh.hotel.mapper.UserMapper">
+    <select id="list" resultType="com.lokyoh.hotel.entity.Customers">
+        select * from customers
+        <where>
+            <if test="phone!=null">
+                phone=#{phone}
+            </if>
+            <if test="level!=null">
+                and membership=#{level}
+            </if>
+        </where>
+    </select>
+</mapper>

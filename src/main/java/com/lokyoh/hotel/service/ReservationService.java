@@ -1,5 +1,7 @@
 package com.lokyoh.hotel.service;
 
+import com.lokyoh.hotel.entity.PageBean;
+import com.lokyoh.hotel.entity.RCInfo;
 import com.lokyoh.hotel.entity.Reservations;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,4 +20,10 @@ public interface ReservationService {
 
     /// 获取占用单号
     Integer getOccupancyId(Integer reservationId, Integer customerId);
+
+    /// 完成预定
+    void checkout(Integer id);
+
+    /// 获取预定列表
+    PageBean<RCInfo> list(Integer pageNum, Integer pageSize, String phone, String roomType, String status);
 }

@@ -21,8 +21,8 @@ public class RoomServiceImpl implements RoomService {
     private UserMapper userMapper;
 
     @Override
-    public Rooms getRooms() {
-        Rooms rooms = new Rooms();
+    public PageBean<RoomInfo> getRooms() {
+        PageBean<RoomInfo> rooms = new PageBean<>();
 
         // 获取房间
         List<Room> roomList = roomMapper.getRooms();
@@ -62,7 +62,7 @@ public class RoomServiceImpl implements RoomService {
                     }
                     return new RoomInfo(roomId, room.getRoomId(), status, customer);
                 }).toList();
-        rooms.setRooms(roomInfoList);
+        rooms.setItems(roomInfoList);
         return rooms;
     }
 
@@ -114,5 +114,15 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void delCohabit(Integer occupancyId, Integer customerId) {
         roomMapper.delCohabit(occupancyId, customerId);
+    }
+
+    @Override
+    public String getRoomType(String roomId) {
+        return roomMapper.getRoomType(roomId);
+    }
+
+    @Override
+    public void delOccupancy(Integer occupancyId) {
+        roomMapper.delOccupancy(occupancyId);
     }
 }

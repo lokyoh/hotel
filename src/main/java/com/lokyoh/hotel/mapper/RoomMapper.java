@@ -18,7 +18,7 @@ public interface RoomMapper {
     List<Occupancies> getAllOccupy();
 
     ///  获取房间占用列表
-    @Select("select occupancy_id from occupancies where room_id=#{roomId} and not(start_time>#{endTime} or end_time>#{startTime})")
+    @Select("select occupancy_id from occupancies where room_id=#{roomId} and not(start_time>#{endTime} or end_time<#{startTime})")
     List<Integer> getRoomHasOccupied(String roomId, LocalDate startTime, LocalDate endTime);
 
     /// 获取房间类型``
@@ -60,7 +60,7 @@ public interface RoomMapper {
             " values (#{occupancyId}, #{customerId})")
     void addCohabit(Integer occupancyId, Integer customerId);
 
-    // 删除同居
+    /// 删除同居
     @Delete("delete from cohabit where occupancy_id=#{occupancyId} and customer_id=#{customerId}")
     void delCohabit(Integer occupancyId, Integer customerId);
 }
