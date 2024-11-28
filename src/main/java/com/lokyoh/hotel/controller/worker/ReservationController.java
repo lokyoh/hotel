@@ -66,6 +66,8 @@ public class ReservationController {
             @RequestParam(required = false) String roomType,
             @RequestParam(required = false) String status
     ) {
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
         PageCheckerUtil.checkPage(pageNum, pageSize);
         PageBean<RCInfo> pb = reservationService.list(pageNum, pageSize, phone, roomType, status);
         return Result.success(pb);

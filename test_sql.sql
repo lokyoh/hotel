@@ -262,3 +262,16 @@ CREATE TABLE cohabit
 );
 INSERT INTO cohabit
 VALUES (1, 1);
+
+-- 12账号表
+DROP TABLE IF EXISTS user;
+CREATE TABLE user
+(
+    customer_id INT           NOT NULL PRIMARY KEY,
+    account     VARCHAR(20)   NOT NULL,
+    password    VARCHAR(20)   NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE
+);
+
+INSERT INTO user
+VALUES (1, 'user1', '123456');

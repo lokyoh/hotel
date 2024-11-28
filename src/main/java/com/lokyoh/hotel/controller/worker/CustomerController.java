@@ -21,6 +21,8 @@ public class CustomerController {
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) String level
     ) {
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
         PageCheckerUtil.checkPage(pageNum, pageSize);
         PageBean<Customers> pb = userService.list(pageNum, pageSize, phone, level);
         return Result.success(pb);

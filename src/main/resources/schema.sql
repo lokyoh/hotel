@@ -168,7 +168,8 @@ CREATE TABLE account
     employee_id INT           NOT NULL PRIMARY KEY,
     account     VARCHAR(20)   NOT NULL,
     password    VARCHAR(20)   NOT NULL,
-    level       INT DEFAULT 2 NOT NULL
+    level       INT DEFAULT 2 NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employees (employee_id) ON DELETE CASCADE
 );
 
 -- 11同居表
@@ -181,3 +182,13 @@ CREATE TABLE cohabit
     FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE,
     PRIMARY KEY (occupancy_id, customer_id)
 )
+
+-- 12账号表
+DROP TABLE IF EXISTS user;
+CREATE TABLE user
+(
+    customer_id INT           NOT NULL PRIMARY KEY,
+    account     VARCHAR(20)   NOT NULL,
+    password    VARCHAR(20)   NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE
+);
