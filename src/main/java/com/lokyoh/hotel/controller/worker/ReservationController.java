@@ -6,7 +6,6 @@ import com.lokyoh.hotel.entity.Reservations;
 import com.lokyoh.hotel.entity.Result;
 import com.lokyoh.hotel.service.ReservationService;
 import com.lokyoh.hotel.service.RoomService;
-import com.lokyoh.hotel.utils.PageCheckerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +67,8 @@ public class ReservationController {
     ) {
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 10 : pageSize;
-        PageCheckerUtil.checkPage(pageNum, pageSize);
+        if (pageNum < 1) return Result.error("pageNum错误");
+        if (pageSize > 30 || pageSize < 1) return Result.error("pageSize错误");
         PageBean<RCInfo> pb = reservationService.list(pageNum, pageSize, phone, roomType, status);
         return Result.success(pb);
     }

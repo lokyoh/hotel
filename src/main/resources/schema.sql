@@ -181,7 +181,7 @@ CREATE TABLE cohabit
     FOREIGN KEY (occupancy_id) REFERENCES occupancies (occupancy_id) ON DELETE CASCADE,
     FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE,
     PRIMARY KEY (occupancy_id, customer_id)
-)
+);
 
 -- 12账号表
 DROP TABLE IF EXISTS user;
