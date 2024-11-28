@@ -1200,7 +1200,7 @@
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/customer/modify
 
 ##### 请求方式:
 
@@ -1245,7 +1245,7 @@
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/worker/customer/register
 
 ##### 请求方式:
 
