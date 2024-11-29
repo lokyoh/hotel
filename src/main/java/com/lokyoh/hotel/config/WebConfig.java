@@ -1,5 +1,6 @@
 package com.lokyoh.hotel.config;
 
+import com.lokyoh.hotel.interceptors.AdminInterceptor;
 import com.lokyoh.hotel.interceptors.LoginInterceptor;
 import com.lokyoh.hotel.interceptors.WorkerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,13 @@ public class WebConfig implements WebMvcConfigurer {
     private LoginInterceptor loginInterceptor;
     @Autowired
     private WorkerInterceptor workerInterceptor;
+    @Autowired
+    private AdminInterceptor adminInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor).excludePathPatterns("/worker/login", "/user/login", "/user/register");
         registry.addInterceptor(workerInterceptor).addPathPatterns("/worker/**").excludePathPatterns("/worker/login");
+        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
     }
 }
