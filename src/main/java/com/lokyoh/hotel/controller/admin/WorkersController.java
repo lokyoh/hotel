@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin/worker")
 @Validated
-public class WorkerController {
+public class WorkersController {
     @GetMapping("/list")
     public Result<Object> list(
             @RequestParam(required = false) Integer pageNum,
