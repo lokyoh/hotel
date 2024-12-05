@@ -1,8 +1,8 @@
 package com.lokyoh.hotel.controller.admin;
 
-import com.lokyoh.hotel.entity.Account;
-import com.lokyoh.hotel.entity.Employees;
-import com.lokyoh.hotel.entity.Result;
+import com.lokyoh.hotel.entity.*;
+import com.lokyoh.hotel.service.WorkerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,24 +10,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/worker")
 @Validated
 public class WorkersController {
+    @Autowired
+    private WorkerService workerService;
+
     @GetMapping("/list")
     public Result<Object> list(
             @RequestParam(required = false) Integer pageNum,
-            @RequestParam(required = false) Integer pageSize
+            @RequestParam(required = false) Integer pageSize,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) String departmentName
     ) {
-        //TODO
-        return Result.success();
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
+        if (pageNum < 1) return Result.error("pageNum错误");
+        if (pageSize > 30 || pageSize < 1) return Result.error("pageSize错误");
+        PageBean<Employees> pb = workerService.list(pageNum, pageSize, phone, departmentName);
+        return Result.success(pb);
     }
 
     @PutMapping("/add")
     public Result<String> add(@RequestBody Employees employee) {
-        //TODO
+        workerService.add(employee);
         return Result.success();
     }
 
     @PutMapping("/modify")
     public Result<String> modify(@RequestParam Employees employee) {
-        //TODO
+        if (employee.getEmployeeId()==null) return Result.error("需要员工id");
+//        workerService.modify(employee);
         return Result.success();
     }
 

@@ -3,6 +3,7 @@ package com.lokyoh.hotel.service;
 import com.lokyoh.hotel.entity.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface RoomService {
     /// 获取房间列表

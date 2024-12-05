@@ -1284,11 +1284,11 @@
 
 ## 3 管理接口
 
-### 3.1 获取员工表x
+### 3.1 获取员工表-
 
 ##### 接口功能:
 
->
+> 用于管理获取员工表
 
 ##### 请求路径:
 
@@ -1300,8 +1300,12 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数             | 类型     | 必须    | 说明                    |
+|:---------------|:-------|:------|:----------------------|
+| pageNum        | number | false | 当前页码 大于等于1 默认1        |
+| pageSize       | number | false | 每页数目 大于等于1小于等于30 默认10 |
+| phone          | string | false | 手机号                   |
+| departmentName | string | false | 部门                    |
 
 ##### 响应类型:
 
@@ -1309,15 +1313,17 @@
 
 ##### 响应数据:
 
-| 参数      | 类型     | 必须    | 说明          |
-|:--------|:-------|:------|:------------|
-| code    | number | true  | 响应码,0成功,1失败 |
-| message | string | false | 提示信息        |
-| data    |        |       |             |
+| 参数       | 类型     | 必须    | 说明          |
+|:---------|:-------|:------|:------------|
+| code     | number | true  | 响应码,0成功,1失败 |
+| message  | string | false | 提示信息        |
+| \|data   | object | true  |             |
+| \|-count | number | true  | 符合条件数据总数    |
+| \|-items | list   | true  | 当前分页数据      |
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/
+> http://localhost:8080/api/admin/worker/list
 
 返回:
 
@@ -1329,24 +1335,33 @@
 }
 ```
 
-### 3.2 添加员工x
+### 3.2 添加员工-
 
 ##### 接口功能:
 
->
+> 用于管理添加员工
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/admin/worker/add
 
 ##### 请求方式:
 
-> POST
+> PUT
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数             | 类型     | 必须   | 说明   |
+|:---------------|:-------|:-----|:-----|
+| ename          | string | true | 姓名   |
+| identification | string | true | 身份证号 |
+| gender         | string | true | 性别   |
+| birthDate      | date   | true | 生日   |
+| hireDate       | date   | true | 雇佣日期 |
+| departmentName | string | true | 部门名称 |
+| contactAddress | string | true | 居住地址 |
+| phoneNumber    | string | true | 手机号码 |
+| email          | string | true | 邮箱   |
 
 ##### 响应类型:
 
@@ -1358,11 +1373,9 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | false | null        |
 
 ##### 接口示例:
-
-> http://localhost:8080/api/worker/
 
 返回:
 
@@ -1370,7 +1383,7 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 
@@ -1378,20 +1391,30 @@
 
 ##### 接口功能:
 
->
+> 用于管理修改员工数据
 
 ##### 请求路径:
 
-> /api/worker/
+> /api/admin/worker/modify
 
 ##### 请求方式:
 
-> POST
+> PUT
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数             | 类型     | 必须   | 说明   |
+|:---------------|:-------|:-----|:-----|
+| employeeId     | number | true | 员工id |
+| ename          | string | true | 姓名   |
+| identification | string | true | 身份证号 |
+| gender         | string | true | 性别   |
+| birthDate      | date   | true | 生日   |
+| hireDate       | date   | true | 雇佣日期 |
+| departmentName | string | true | 部门名称 |
+| contactAddress | string | true | 居住地址 |
+| phoneNumber    | string | true | 手机号码 |
+| email          | string | true | 邮箱   |
 
 ##### 响应类型:
 
@@ -1403,11 +1426,9 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | false | null        |
 
 ##### 接口示例:
-
-> http://localhost:8080/api/worker/
 
 返回:
 
@@ -1415,7 +1436,7 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 
@@ -1643,7 +1664,6 @@
     "data": 
 }
 ```
-
 
 ### 3.9 添加员工账号x
 

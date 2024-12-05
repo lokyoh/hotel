@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lokyoh.hotel.mapper.WorkerMapper">
+    <select id="list" resultType="com.lokyoh.hotel.entity.Employees">
+        select * from employees
+        <where>
+            <if test="phone!=null">
+                phone_number=#{phone}
+            </if>
+            <if test="departmentName!=null">
+                and department_name=#{departmentName}
+            </if>
+        </where>
+    </select>
+</mapper>
