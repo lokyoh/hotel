@@ -9,4 +9,8 @@ public interface WorkerService {
     PageBean<Employees> list(Integer pageNum, Integer pageSize, String phone, String departmentName);
 
     void add(Employees employee);
+
+    void modify(Employees employee);
+
+    void del(Integer id);
 }

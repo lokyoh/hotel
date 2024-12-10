@@ -1,5 +1,7 @@
 package com.lokyoh.hotel.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lokyoh.hotel.entity.*;
 import com.lokyoh.hotel.mapper.RoomMapper;
 import com.lokyoh.hotel.mapper.UserMapper;
@@ -124,5 +126,16 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void delOccupancy(Integer occupancyId) {
         roomMapper.delOccupancy(occupancyId);
+    }
+
+    @Override
+    public PageBean<Room> roomList(Integer pageNum, Integer pageSize, String type) {
+        PageBean<Room> pb = new PageBean<>();
+        PageHelper.startPage(pageNum, pageSize);
+        List<Room> rs = roomMapper.roomList(type);
+        PageInfo<Room> p = new PageInfo<>(rs);
+        pb.setCount(p.getTotal());
+        pb.setItems(p.getList());
+        return pb;
     }
 }

@@ -35,4 +35,14 @@ public class WorkerServiceImpl implements WorkerService {
     public void add(Employees employee) {
         workerMapper.add(employee);
     }
+
+    @Override
+    public void modify(Employees employee) {
+        workerMapper.modify(employee);
+    }
+
+    @Override
+    public void del(Integer id) {
+        workerMapper.del(id);
+    }
 }

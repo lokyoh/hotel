@@ -3,7 +3,6 @@ package com.lokyoh.hotel.service;
 import com.lokyoh.hotel.entity.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface RoomService {
     /// 获取房间列表
@@ -29,4 +28,6 @@ public interface RoomService {
 
     /// 删除占用
     void delOccupancy(Integer oId);
+
+    PageBean<Room> roomList(Integer pageNum, Integer pageSize, String type);
 }

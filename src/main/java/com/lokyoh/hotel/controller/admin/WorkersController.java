@@ -37,13 +37,13 @@ public class WorkersController {
     @PutMapping("/modify")
     public Result<String> modify(@RequestParam Employees employee) {
         if (employee.getEmployeeId()==null) return Result.error("需要员工id");
-//        workerService.modify(employee);
+        workerService.modify(employee);
         return Result.success();
     }
 
     @PostMapping("/del")
     public Result<String> del(@RequestParam Integer id) {
-        //TODO
+        workerService.del(id);
         return Result.success();
     }
 

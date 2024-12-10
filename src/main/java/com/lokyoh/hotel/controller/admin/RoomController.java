@@ -1,8 +1,8 @@
 package com.lokyoh.hotel.controller.admin;
 
-import com.lokyoh.hotel.entity.Result;
-import com.lokyoh.hotel.entity.Room;
-import com.lokyoh.hotel.entity.RoomType;
+import com.lokyoh.hotel.entity.*;
+import com.lokyoh.hotel.service.RoomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +10,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/room")
 @Validated
 public class RoomController {
+    @Autowired
+    private RoomService roomService;
+
     @GetMapping("/list")
-    public Result<String> list(
+    public Result<Object> list(
             @RequestParam(required = false) Integer pageNum,
-            @RequestParam(required = false) Integer pageSize
+            @RequestParam(required = false) Integer pageSize,
+            @RequestParam(required = false) String type
     ) {
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
+        if (pageNum < 1) return Result.error("pageNum错误");
+        if (pageSize > 30 || pageSize < 1) return Result.error("pageSize错误");
         //TODO
-        return Result.success();
+        PageBean<Room> pb = roomService.roomList(pageNum,pageSize,type);
+        return Result.success(pb);
     }
 
     @PutMapping("/add")

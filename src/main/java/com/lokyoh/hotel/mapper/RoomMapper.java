@@ -63,4 +63,6 @@ public interface RoomMapper {
     /// 删除同居
     @Delete("delete from cohabit where occupancy_id=#{occupancyId} and customer_id=#{customerId}")
     void delCohabit(Integer occupancyId, Integer customerId);
+
+    List<Room> roomList(String type);
 }

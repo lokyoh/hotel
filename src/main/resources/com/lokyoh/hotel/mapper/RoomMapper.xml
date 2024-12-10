@@ -3,4 +3,12 @@
         PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lokyoh.hotel.mapper.RoomMapper">
+    <select id="roomList" resultType="com.lokyoh.hotel.entity.Room">
+        select * from room
+        <where>
+            <if test="type!=null">
+                rtype=#{type}
+            </if>
+        </where>
+    </select>
 </mapper>

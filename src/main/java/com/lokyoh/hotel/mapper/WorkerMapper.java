@@ -2,9 +2,7 @@ package com.lokyoh.hotel.mapper;
 
 import com.lokyoh.hotel.entity.Account;
 import com.lokyoh.hotel.entity.Employees;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,4 +17,11 @@ public interface WorkerMapper {
     @Insert("insert into employees (ename, identification, gender, birth_date, hire_date, department_name, contact_address, phone_number, email)" +
             " values (#{ename}, #{identification}, #{gender}, #{birthDate}, #{hireDate}, #{departmentName}, #{contactAddress}, #{phoneNumber}, #{email})")
     void add(Employees employee);
+
+    @Update("update employees set ename=#{ename},identification=#{identification},gender=#{gender},birth_date=#{birthDate},department_name=#{departmentName},contact_address=#{contactAddress},phone_number=#{phoneNumber},email=#{email}" +
+            " where employee_id=#{employeeId}")
+    void modify(Employees employee);
+
+    @Delete("delete from employees where employee_id=#{id}")
+    void del(Integer id);
 }
