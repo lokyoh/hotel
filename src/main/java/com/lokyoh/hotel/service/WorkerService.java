@@ -13,4 +13,8 @@ public interface WorkerService {
     void modify(Employees employee);
 
     void del(Integer id);
+
+    void addAccount(Account account);
+
+    void delAccount(Integer id);
 }

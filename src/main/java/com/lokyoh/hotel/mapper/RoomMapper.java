@@ -2,6 +2,7 @@ package com.lokyoh.hotel.mapper;
 
 import com.lokyoh.hotel.entity.Occupancies;
 import com.lokyoh.hotel.entity.Room;
+import com.lokyoh.hotel.entity.RoomType;
 import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDate;
@@ -65,4 +66,20 @@ public interface RoomMapper {
     void delCohabit(Integer occupancyId, Integer customerId);
 
     List<Room> roomList(String type);
+
+    @Insert("insert into room (room_id, rtype) values (#{roomId}, #{rtype})")
+    void add(Room room);
+
+    @Update("update room set rtype=#{rtype} where room_id=#{roomId}")
+    void modify(Room room);
+
+    @Delete("delete from room where room_id=#{id}")
+    void del(Integer id);
+
+    @Insert("insert into roomtype (rtype, area, number, specification, price, rnumber)" +
+            " values (#{rtype}, #{area}, #{number}, #{specification}, #{price}, #{rnumber})")
+    void addType(RoomType roomType);
+
+    @Delete("delete from roomtype where rtype=#{type}")
+    void delType(String type);
 }

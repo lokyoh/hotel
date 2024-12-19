@@ -49,13 +49,13 @@ public class WorkersController {
 
     @PutMapping("/account/add")
     public Result<String> addAccount(@RequestBody Account account) {
-        //TODO
+        workerService.addAccount(account);
         return Result.success();
     }
 
     @PostMapping("/account/del")
     public Result<String> delAccount(@RequestParam Integer id) {
-        //TODO
+        workerService.delAccount(id);
         return Result.success();
     }
 }

@@ -30,4 +30,14 @@ public interface RoomService {
     void delOccupancy(Integer oId);
 
     PageBean<Room> roomList(Integer pageNum, Integer pageSize, String type);
+
+    void add(Room room);
+
+    void modify(Room room);
+
+    void del(Integer id);
+
+    void addType(RoomType roomType);
+
+    void delType(String type);
 }

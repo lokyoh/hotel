@@ -24,4 +24,11 @@ public interface WorkerMapper {
 
     @Delete("delete from employees where employee_id=#{id}")
     void del(Integer id);
+
+    @Insert("insert into account (employee_id, account, password, level)" +
+            " values (#{employeeID}, #{account}, #{password}, #{level})")
+    void addAccount(Account account);
+
+    @Delete("delete from account where employee_id=#{employeeId}")
+    void delAccount(Integer id);
 }

@@ -23,38 +23,37 @@ public class RoomController {
         pageSize = pageSize == null ? 10 : pageSize;
         if (pageNum < 1) return Result.error("pageNum错误");
         if (pageSize > 30 || pageSize < 1) return Result.error("pageSize错误");
-        //TODO
         PageBean<Room> pb = roomService.roomList(pageNum,pageSize,type);
         return Result.success(pb);
     }
 
     @PutMapping("/add")
     public Result<String> add(@RequestBody Room room) {
-        //TODO
+        roomService.add(room);
         return Result.success();
     }
 
     @PutMapping("/modify")
     public Result<String> modify(@RequestParam Room room) {
-        //TODO
+        roomService.modify(room);
         return Result.success();
     }
 
     @PostMapping("/del")
     public Result<String> del(@RequestParam Integer id) {
-        //TODO
+        roomService.del(id);
         return Result.success();
     }
 
     @PutMapping("/type/add")
     public Result<String> addType(@RequestBody RoomType roomType) {
-        //TODO
+        roomService.addType(roomType);
         return Result.success();
     }
 
     @PostMapping("/type/del")
     public Result<String> delType(@RequestParam String type) {
-        //TODO
+        roomService.delType(type);
         return Result.success();
     }
 }

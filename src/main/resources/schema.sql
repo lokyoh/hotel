@@ -183,7 +183,7 @@ CREATE TABLE cohabit
     PRIMARY KEY (occupancy_id, customer_id)
 );
 
--- 12账号表
+-- 12用户账号表
 DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (

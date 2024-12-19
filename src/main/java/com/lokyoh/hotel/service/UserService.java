@@ -11,4 +11,10 @@ public interface UserService {
     Customers getCustomer(Integer userId);
 
     PageBean<Customers> list(Integer pageNum, Integer pageSize, String phone, String level);
+
+    void add(Customers customers);
+
+    void modify(Customers customers);
+
+    void register(Integer customerId);
 }

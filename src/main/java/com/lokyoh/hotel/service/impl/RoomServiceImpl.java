@@ -138,4 +138,29 @@ public class RoomServiceImpl implements RoomService {
         pb.setItems(p.getList());
         return pb;
     }
+
+    @Override
+    public void add(Room room) {
+        roomMapper.add(room);
+    }
+
+    @Override
+    public void modify(Room room) {
+        roomMapper.modify(room);
+    }
+
+    @Override
+    public void del(Integer id) {
+        roomMapper.del(id);
+    }
+
+    @Override
+    public void addType(RoomType roomType) {
+        roomMapper.addType(roomType);
+    }
+
+    @Override
+    public void delType(String type) {
+        roomMapper.delType(type);
+    }
 }

@@ -45,4 +45,14 @@ public class WorkerServiceImpl implements WorkerService {
     public void del(Integer id) {
         workerMapper.del(id);
     }
+
+    @Override
+    public void addAccount(Account account) {
+        workerMapper.addAccount(account);
+    }
+
+    @Override
+    public void delAccount(Integer id) {
+        workerMapper.delAccount(id);
+    }
 }

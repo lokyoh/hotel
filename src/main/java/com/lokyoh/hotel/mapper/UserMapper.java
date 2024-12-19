@@ -2,8 +2,7 @@ package com.lokyoh.hotel.mapper;
 
 import com.lokyoh.hotel.entity.Customers;
 import jakarta.validation.constraints.NotNull;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -30,4 +29,14 @@ public interface UserMapper {
     Integer getCustomerIdByPhone(String phone);
 
     List<Customers> list(String phone, String level);
+
+    @Insert("insert into customers ()" +
+            " values ()")
+    void add(Customers customers);
+
+    @Update("update customers set ")
+    void modify(Customers customers);
+
+    @Delete("delete from customers where customer_id=#{customerId}")
+    void register(Integer customerId);
 }

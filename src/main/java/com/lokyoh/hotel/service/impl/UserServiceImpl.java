@@ -35,4 +35,19 @@ public class UserServiceImpl implements UserService {
         pb.setItems(p.getList());
         return pb;
     }
+
+    @Override
+    public void add(Customers customers) {
+        userMapper.add(customers);
+    }
+
+    @Override
+    public void modify(Customers customers) {
+        userMapper.modify(customers);
+    }
+
+    @Override
+    public void register(Integer customerId) {
+        userMapper.register(customerId);
+    }
 }
