@@ -1147,7 +1147,7 @@
 }
 ```
 
-### 2.20 添加客户x
+### 2.20 添加客户-
 
 ##### 接口功能:
 
@@ -1163,8 +1163,13 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数             | 类型     | 必须   | 说明   |
+|:---------------|:-------|:-----|:-----|
+| identification | number | true | 身份证号 |
+| cname          | string | true | 姓名   |
+| gender         | string | true | 性别   |
+| caddress       | string | true | 地址   |
+| phone          | string | true | 电话   |
 
 ##### 响应类型:
 
@@ -1176,7 +1181,7 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | false | null        |
 
 ##### 接口示例:
 
@@ -1188,15 +1193,15 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 
-### 2.21 修改客户信息x
+### 2.21 修改客户信息-
 
 ##### 接口功能:
 
->
+> 用于员工修改客户信息
 
 ##### 请求路径:
 
@@ -1208,8 +1213,13 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数             | 类型     | 必须   | 说明   |
+|:---------------|:-------|:-----|:-----|
+| identification | number | true | 身份证号 |
+| cname          | string | true | 姓名   |
+| gender         | string | true | 性别   |
+| caddress       | string | true | 地址   |
+| phone          | string | true | 电话   |
 
 ##### 响应类型:
 
@@ -1221,11 +1231,11 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | false | null        |
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/
+> http://localhost:8080/api/worker/customer/modify
 
 返回:
 
@@ -1233,15 +1243,15 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 
-### 2.22 注册会员x
+### 2.22 注册会员
 
 ##### 接口功能:
 
->
+> 用于员工为客户注册会员
 
 ##### 请求路径:
 
@@ -1253,8 +1263,9 @@
 
 ##### 请求参数:
 
-| 参数         | 类型     | 必须   | 说明       |
-|:-----------|:-------|:-----|:---------|
+| 参数         | 类型     | 必须   | 说明   |
+|:-----------|:-------|:-----|:-----|
+| customerId | number | true | 用户ID |
 
 ##### 响应类型:
 
@@ -1266,11 +1277,11 @@
 |:--------|:-------|:------|:------------|
 | code    | number | true  | 响应码,0成功,1失败 |
 | message | string | false | 提示信息        |
-| data    |        |       |             |
+| data    | null   | false | null        |
 
 ##### 接口示例:
 
-> http://localhost:8080/api/worker/
+> http://localhost:8080/api/worker/customer/register
 
 返回:
 
@@ -1278,7 +1289,7 @@
 {
     "code": 0,
     "message": "操作成功",
-    "data": 
+    "data": null
 }
 ```
 

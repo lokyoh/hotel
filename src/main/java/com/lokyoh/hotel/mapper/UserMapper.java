@@ -30,13 +30,14 @@ public interface UserMapper {
 
     List<Customers> list(String phone, String level);
 
-    @Insert("insert into customers ()" +
-            " values ()")
+    @Insert("insert into customers (identification, cname, gender, caddress, phone)" +
+            " values (#{identification}, #{cname}, #{gender}, #{caddress}, #{phone})")
     void add(Customers customers);
 
-    @Update("update customers set ")
+    @Update("update customers set identification=#{identification}, cname=#{cname}, gender=#{gender}, caddress=#{caddress}, phone=#{phone} " +
+            "where customer_id=#{customerId}")
     void modify(Customers customers);
 
-    @Delete("delete from customers where customer_id=#{customerId}")
+    @Delete("update customers set membership='一级会员' where customer_id=#{customerId}")
     void register(Integer customerId);
 }

@@ -30,21 +30,21 @@ public class CustomerController {
 
     @PutMapping("/add")
     public Result<String> add(@RequestBody Customers customers) {
-        //TODO
         userService.add(customers);
         return Result.success();
     }
 
     @PutMapping("/modify")
     public Result<String> modify(@RequestBody Customers customers) {
-        //TODO
         userService.modify(customers);
         return Result.success();
     }
 
     @PostMapping("/register")
     public Result<String> register(@RequestParam Integer customerId) {
-        //TODO
+        Customers customers = userService.getCustomer(customerId);
+        if(!customers.getMembership().equals("普通"))
+            return Result.error("该用户已是会员");
         userService.register(customerId);
         return Result.success();
     }
